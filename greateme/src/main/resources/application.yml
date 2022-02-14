@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/greatme?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+
+server:
+  port: 8080
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+logging:
+  level:
+    com:
+      lzf:
+        greatme:
+          mapper: debug
+
+pagehelper:
+  helper-dialect: mysql

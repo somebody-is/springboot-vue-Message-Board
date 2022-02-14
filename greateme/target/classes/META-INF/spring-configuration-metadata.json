@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "email",
+      "type": "com.lzf.greatme.config.EmailConfig",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "email.charset",
+      "type": "java.lang.String",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    },
+    {
+      "name": "email.host",
+      "type": "java.lang.String",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    },
+    {
+      "name": "email.password",
+      "type": "java.lang.String",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    },
+    {
+      "name": "email.pick-name",
+      "type": "java.lang.String",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    },
+    {
+      "name": "email.port",
+      "type": "java.lang.Integer",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    },
+    {
+      "name": "email.user-name",
+      "type": "java.lang.String",
+      "sourceType": "com.lzf.greatme.config.EmailConfig"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzf.greatme.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.lzf.greatme.entity.Message" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="message_key" property="messageKey" jdbcType="VARCHAR" />
+    <result column="message_date" property="messageDate" jdbcType="VARCHAR" />
+    <result column="message_master" property="messageMaster" jdbcType="INTEGER" />
+    <result column="is_locked" property="isLocked" jdbcType="INTEGER" />
+    <result column="message_password" property="messagePassword" jdbcType="VARCHAR" />
+    <result column="master_name" property="masterName" jdbcType="VARCHAR" />
+    <result column="is_public" property="isPublic" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lzf.greatme.entity.Message" extends="BaseResultMap" >
+    <result column="message_content" property="messageContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, message_key, message_date, message_master, is_locked, message_password, master_name,
+    is_public
+  </sql>
+  <sql id="Blob_Column_List" >
+    message_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lzf.greatme.entity.MessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lzf.greatme.entity.MessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lzf.greatme.entity.MessageExample" >
+    delete from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lzf.greatme.entity.Message" >
+    insert into message (id, message_key, message_date,
+                         message_master, is_locked, message_password,
+                         master_name, is_public, message_content
+    )
+    values (#{id,jdbcType=INTEGER}, #{messageKey,jdbcType=VARCHAR}, #{messageDate,jdbcType=TIMESTAMP},
+            #{messageMaster,jdbcType=INTEGER}, #{isLocked,jdbcType=INTEGER}, #{messagePassword,jdbcType=VARCHAR},
+            #{masterName,jdbcType=VARCHAR}, #{isPublic,jdbcType=INTEGER}, #{messageContent,jdbcType=LONGVARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lzf.greatme.entity.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="messageKey != null" >
+        message_key,
+      </if>
+      <if test="messageDate != null" >
+        message_date,
+      </if>
+      <if test="messageMaster != null" >
+        message_master,
+      </if>
+      <if test="isLocked != null" >
+        is_locked,
+      </if>
+      <if test="messagePassword != null" >
+        message_password,
+      </if>
+      <if test="masterName != null" >
+        master_name,
+      </if>
+      <if test="isPublic != null" >
+        is_public,
+      </if>
+      <if test="messageContent != null" >
+        message_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="messageKey != null" >
+        #{messageKey,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDate != null" >
+        #{messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageMaster != null" >
+        #{messageMaster,jdbcType=INTEGER},
+      </if>
+      <if test="isLocked != null" >
+        #{isLocked,jdbcType=INTEGER},
+      </if>
+      <if test="messagePassword != null" >
+        #{messagePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="masterName != null" >
+        #{masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        #{isPublic,jdbcType=INTEGER},
+      </if>
+      <if test="messageContent != null" >
+        #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lzf.greatme.entity.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update message
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageKey != null" >
+        message_key = #{record.messageKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messageDate != null" >
+        message_date = #{record.messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.messageMaster != null" >
+        message_master = #{record.messageMaster,jdbcType=INTEGER},
+      </if>
+      <if test="record.isLocked != null" >
+        is_locked = #{record.isLocked,jdbcType=INTEGER},
+      </if>
+      <if test="record.messagePassword != null" >
+        message_password = #{record.messagePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterName != null" >
+        master_name = #{record.masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isPublic != null" >
+        is_public = #{record.isPublic,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageContent != null" >
+        message_content = #{record.messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update message
+    set id = #{record.id,jdbcType=INTEGER},
+    message_key = #{record.messageKey,jdbcType=VARCHAR},
+    message_date = #{record.messageDate,jdbcType=TIMESTAMP},
+    message_master = #{record.messageMaster,jdbcType=INTEGER},
+    is_locked = #{record.isLocked,jdbcType=INTEGER},
+    message_password = #{record.messagePassword,jdbcType=VARCHAR},
+    master_name = #{record.masterName,jdbcType=VARCHAR},
+    is_public = #{record.isPublic,jdbcType=INTEGER},
+    message_content = #{record.messageContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update message
+    set id = #{record.id,jdbcType=INTEGER},
+    message_key = #{record.messageKey,jdbcType=VARCHAR},
+    message_date = #{record.messageDate,jdbcType=TIMESTAMP},
+    message_master = #{record.messageMaster,jdbcType=INTEGER},
+    is_locked = #{record.isLocked,jdbcType=INTEGER},
+    message_password = #{record.messagePassword,jdbcType=VARCHAR},
+    master_name = #{record.masterName,jdbcType=VARCHAR},
+    is_public = #{record.isPublic,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lzf.greatme.entity.Message" >
+    update message
+    <set >
+      <if test="messageKey != null" >
+        message_key = #{messageKey,jdbcType=VARCHAR},
+      </if>
+      <if test="messageDate != null" >
+        message_date = #{messageDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageMaster != null" >
+        message_master = #{messageMaster,jdbcType=INTEGER},
+      </if>
+      <if test="isLocked != null" >
+        is_locked = #{isLocked,jdbcType=INTEGER},
+      </if>
+      <if test="messagePassword != null" >
+        message_password = #{messagePassword,jdbcType=VARCHAR},
+      </if>
+      <if test="masterName != null" >
+        master_name = #{masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null" >
+        is_public = #{isPublic,jdbcType=INTEGER},
+      </if>
+      <if test="messageContent != null" >
+        message_content = #{messageContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lzf.greatme.entity.Message" >
+    update message
+    set message_key = #{messageKey,jdbcType=VARCHAR},
+        message_date = #{messageDate,jdbcType=TIMESTAMP},
+        message_master = #{messageMaster,jdbcType=INTEGER},
+        is_locked = #{isLocked,jdbcType=INTEGER},
+        message_password = #{messagePassword,jdbcType=VARCHAR},
+        master_name = #{masterName,jdbcType=VARCHAR},
+        is_public = #{isPublic,jdbcType=INTEGER},
+        message_content = #{messageContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lzf.greatme.entity.Message" >
+    update message
+    set message_key = #{messageKey,jdbcType=VARCHAR},
+        message_date = #{messageDate,jdbcType=TIMESTAMP},
+        message_master = #{messageMaster,jdbcType=INTEGER},
+        is_locked = #{isLocked,jdbcType=INTEGER},
+        message_password = #{messagePassword,jdbcType=VARCHAR},
+        master_name = #{masterName,jdbcType=VARCHAR},
+        is_public = #{isPublic,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
